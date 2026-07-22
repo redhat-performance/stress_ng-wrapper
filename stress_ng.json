@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "rhel": [
+      "bc",
+      "stress-ng"
+    ]
+  }
+}
