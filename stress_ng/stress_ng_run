@@ -307,11 +307,11 @@ ${TOOLS_BIN}/save_results --curdir $curdir --home_root $to_home_root --other_fil
 popd > /dev/null
 $TOOLS_BIN/csv_to_json $to_json_flags --csv_file ${results_file} --output_file results_stress_ng.json
 if [[ $? -ne 0 ]]; then
-	exit_out "Failed: $TOOLS_BIN/csv_to_json $to_json_flags --csv_file ${results_file} --output_file results_stress_ng.json" E_GENERAL
+	exit_out "Failed: $TOOLS_BIN/csv_to_json $to_json_flags --csv_file ${results_file} --output_file results_stress_ng.json" $E_GENERAL
 
 fi
 $TOOLS_BIN/verify_results $to_verify_flags --schema_file $script_dir/../result_schema.py --class_name Stress_ng_Results --file results_stress_ng.json
 if [[ $? -ne 0 ]]; then
-	exit_out "CSV contains invalid data." E_VALIDATION_FAIL
+	exit_out "CSV contains invalid data." $E_VALIDATION_FAIL
 fi
 exit $E_SUCCESS
