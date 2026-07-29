@@ -304,7 +304,6 @@ if [[ $to_use_pcp -eq 1 ]]; then
 fi
 
 ${TOOLS_BIN}/save_results --curdir $curdir --home_root $to_home_root --other_files "*_summary,run*log,test_results_report,${pcpdir}" --results $results_file --test_name stress_ng --tuned_setting=$to_tuned_setting --version $stress_ng_wrapper_version --user $to_user 
-popd > /dev/null
 $TOOLS_BIN/csv_to_json $to_json_flags --csv_file ${results_file} --output_file results_stress_ng.json
 if [[ $? -ne 0 ]]; then
 	exit_out "Failed: $TOOLS_BIN/csv_to_json $to_json_flags --csv_file ${results_file} --output_file results_stress_ng.json" $E_GENERAL
@@ -314,4 +313,5 @@ $TOOLS_BIN/verify_results $to_verify_flags --schema_file $script_dir/../result_s
 if [[ $? -ne 0 ]]; then
 	exit_out "CSV contains invalid data." $E_VALIDATION_FAIL
 fi
+popd > /dev/null
 exit $E_SUCCESS
