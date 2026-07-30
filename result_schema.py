@@ -1,0 +1,60 @@
+import pydantic
+import datetime
+from enum import Enum
+
+class Benchmark(Enum):
+    avl_tree = "avl_tree"
+    avx_512_VNNI = "avx_512_VNNI"
+    bessel_math_operations = "bessel_math_operations"
+    bitonic_integer_sort = "bitonic_integer_sort"
+    cloning = "cloning"
+    context_switching = "context_switching"
+    cpu_cache = "cpu_cache"
+    cpu_stress = "cpu_stress"
+    crypto = "crypto"
+    exponential_math = "exponential_math"
+    floating_point = "floating_point"
+    forking = "forking"
+    fractal_Generator = "fractal_Generator"
+    function_call = "function_call"
+    fused_multiply_add = "fused_multiply_add"
+    futex = "futex"
+    glibc_c_string_functions = "glibc_c_string_functions"
+    glibc_qsort_data_sorting = "glibc_qsort_data_sorting"
+    hash = "hash"
+    hyperbolic_trigonometric_math = "hyperbolic_trigonometric_math"
+    integer_bit_operationsr = "integer_bit_operationsr"
+    integer_math = "integer_math"
+    jpeg_compression = "jpeg_compression"
+    logarithmic_math = "logarithmic_math"
+    malloc = "malloc"
+    matrix_3d_math = "matrix_3d_math"
+    matrix_math = "matrix_math"
+    memfd = "memfd"
+    memory_copying = "memory_copying"
+    mixed_scheduler = "mixed_scheduler"
+    mmap = "mmap"
+    mutex = "mutex"
+    numa = "numa"
+    pipe = "pipe"
+    poll = "poll"
+    posix_regular_expressions = "posix_regular_expressions"
+    power_math = "power_math"
+    pthread = "pthread"
+    radix_String_sort = "radix_String_sort"
+    semaphores = "semaphores"
+    sendfile = "sendfile"
+    socket_activity = "socket_activity"
+    system_v_message_passing = "system_v_message_passing"
+    trigonometric_math = "trigonometric_math"
+    vector_floating_point = "vector_floating_point"
+    vector_math = "vector_math"
+    vector_shuffle = "vector_shuffle"
+    wide_Vector_Math = "wide_Vector_Math"
+    zlib = "zlib"
+
+class Stress_ng_Results (pydantic.BaseModel):
+    test: Benchmark
+    bogo_ops_per_sec: int = pydantic.Field(gt=0)
+    Start_Date: datetime.datetime
+    End_Date: datetime.datetime
