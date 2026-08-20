@@ -214,7 +214,7 @@ generate_csv_file()
 			separ="+"
 		done
 		if [[ $record -eq 1 ]]; then
-			value=$(echo "($add_up)/${to_times_to_run}" | bc)
+			value=$(echo "scaler=2;($add_up)/${to_times_to_run}" | bc)
 			test_out=$(echo $test_exec | sed "s/-/_/g")
 			echo $test_out,$value,$start_time,$end_time >> worker
 		else
