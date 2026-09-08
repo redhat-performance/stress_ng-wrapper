@@ -188,7 +188,9 @@ execute_stress_ng()
 
 generate_csv_file()
 {
-	$TOOLS_BIN/test_header_info --front_matter --results_file $results_file --host $to_configuration --sys_type $to_sys_type --tuned $to_tuned_setting --results_version $stress_ng_wrapper_version --test_name $test_name --field_header "test,bogo_ops_per_sec"
+	record=1
+	rm -f worker
+	$TOOLS_BIN/test_header_info --front_matter --results_file worker --host $to_configuration --sys_type $to_sys_type --tuned $to_tuned_setting --results_version $stress_ng_wrapper_version --test_name $test_name --field_header "test,bogo_ops_per_sec"
 
 	ls results*data | cut -d'_' -f2- | rev | cut -d'_' -f3- | rev |sort -u > test_ran
 
@@ -197,7 +199,12 @@ generate_csv_file()
 		start_time=""
 		separ=""
 		add_up=""
+		record=1
 		for res in $(ls results_${test_exec}* ); do
+			grep -q "not implemented on this system" $res
+			if [[ $? -eq 0 ]]; then
+				record=0
+			fi
 			if [[ $start_time == "" ]]; then
 				start_time=$(grep Start_time: $res | cut -d' ' -f2)
 			fi
@@ -206,11 +213,16 @@ generate_csv_file()
 			add_up=${add_up}${separ}${val}
 			separ="+"
 		done
-		value=$(echo "($add_up)/${to_times_to_run}" | bc)
-		test_out=$(echo $test_exec | sed "s/-/_/g")
-		echo $test_out,$value,$start_time,$end_time >> $results_file
+		if [[ $record -eq 1 ]]; then
+			value=$(echo "scaler=2;($add_up)/${to_times_to_run}" | bc)
+			test_out=$(echo $test_exec | sed "s/-/_/g")
+			echo $test_out,$value,$start_time,$end_time >> worker
+		else
+			echo "# $test_exec not implemented on this system" >> $results_file
+		fi
 	done < "test_ran"
-	rm test_ran
+	cat worker >> $results_file
+	rm worker test_ran
 }
 
 install_test_tools "$@"

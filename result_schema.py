@@ -55,6 +55,6 @@ class Benchmark(Enum):
 
 class Stress_ng_Results (pydantic.BaseModel):
     test: Benchmark
-    bogo_ops_per_sec: int = pydantic.Field(gt=0)
+    bogo_ops_per_sec: float = pydantic.Field(gt=0)
     Start_Date: datetime.datetime
     End_Date: datetime.datetime
